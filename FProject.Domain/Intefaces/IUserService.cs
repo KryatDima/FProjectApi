@@ -1,4 +1,5 @@
 ﻿using FProject.Data.Entities;
+using FProject.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,8 +10,8 @@ namespace FProject.Domain.Intefaces
     public interface IUserService
     {
         Task<User> Get(long id);
-        Task<User> Authenticate(string username, string password);
-        Task<User> Create();
+        Task<User> AuthenticateAsync(string username, string password);
+        Task<User> CreateAsync(RegisterModel model);
         //Task<User> 
     }
 }

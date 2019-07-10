@@ -30,12 +30,13 @@ namespace FProject.Domain
             return await unitOfWork.Repository<Product>().GetQueryable().Where(x => x.BrandId == param.BrandId)
                 .Where(x => x.ProductTypeId == param.TypeId)
                 .Where(x => x.Price >= param.PriceFrom && x.Price <= param.PriceTo)
+                .Where(x=>x.IsDeleted!=true)
                 .ToListAsync();
         }
 
         public async Task<List<Product>> GetListBySearchQuery(string searchQuery)
         {
-            return await unitOfWork.Repository<Product>().GetQueryable().Where(x => x.Title.StartsWith(searchQuery)).ToListAsync();
+            return await unitOfWork.Repository<Product>().GetQueryable().Where(x => x.Title.StartsWith(searchQuery)).Where(x=>x.IsDeleted!=true).ToListAsync();
         }
     }
 }

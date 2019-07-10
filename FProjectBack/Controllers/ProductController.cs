@@ -26,6 +26,23 @@ namespace FProjectBack.Controllers
             return Ok(entity);
         }
 
+        [HttpGet("search/{searchQuery?}")]
+        public async Task<IActionResult> GetListBySearchQuery(string searchQuery)
+        {
+            if (searchQuery == null || searchQuery.Length <= 4)
+                return Ok();
 
+            //var userId = GetUserId();
+            var entity = await service.GetListBySearchQuery(searchQuery);
+
+            if (!entity.Any())
+            {
+                //var title= await service
+                entity = await service.GetListBySearchQuery(searchQuery);
+
+                return Ok();
+            }
+            return Ok();
+        }
     }
 }

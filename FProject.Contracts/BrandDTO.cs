@@ -1,8 +1,10 @@
-﻿using FProject.Data.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace FProject.Data.Entities
+namespace FProject.Contracts
 {
-    public class Brand : IEntity
+    public class BrandDTO
     {
         public long Id { get; set; }
         public string Title { get; set; }

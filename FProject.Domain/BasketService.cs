@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using FProject.Contracts;
 
 namespace FProject.Domain
 {
@@ -18,7 +19,24 @@ namespace FProject.Domain
 
         public async Task<Basket> GetBasketByUserId(long userId)
         {
-            return await unitOfWork.BasketRepository.GetBasketByUserId(userId);
+            var basket = await unitOfWork.BasketRepository.GetBasketByUserId(userId);
+            var basketdto = new BasketDTO
+            {
+                Id = basket.Id,
+                UserId = basket.UserId,
+                BasketItems = basket.BasketItems
+                    .Where(x=>x.Basket.UserId==basket.UserId)
+                    .Select(x=>new BasketItemsDTO()
+                {
+                    BasketId =basket.Id,
+                    Basket = basket.BasketItems.
+                        FirstOrDefault(y => y.BasketId == basket.Id).Basket,
+                        
+                }),
+                User = basket.User.
+            };
+
+            return basketdto;//await unitOfWork.BasketRepository.GetBasketByUserId(userId);
         }
         public BasketService(IUnitOfWork unitOfWork)
         {

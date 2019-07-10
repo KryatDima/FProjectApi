@@ -18,8 +18,18 @@ namespace FProject.Data.UnitOfWorks
         private readonly FProjectDbContext dbContext;
         private bool disposed = false;
 
+        private IUserRepository userRepository;
         private IBasketItemRepository basketItemRepository;
         private IBasketRepository basketRepository;
+        public IUserRepository UserRepository
+        {
+            get
+            {
+                if (userRepository == null)
+                    userRepository = new UserRepository(dbContext);
+                return userRepository;
+            }
+        }
         public IBasketRepository BasketRepository
         {
             get

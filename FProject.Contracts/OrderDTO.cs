@@ -1,18 +1,19 @@
-﻿using FProject.Data.Interfaces;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace FProject.Data.Entities
+namespace FProject.Contracts
 {
-    public class Order : IEntity
+    public class OrderDTO
     {
         public long Id { get; set; }
 
         public long UserId { get; set; }
-        public virtual User User { get; set; }
+        public virtual UserDTO User { get; set; }
 
         public string Comment { get; set; }
         //public double Cost { get; set; }
         public bool IsDeleted { get; set; }
-        public virtual List<OrderItems> OrderItems { get; set; }
+        public virtual List<OrderItemsDTO> OrderItems { get; set; }
     }
 }

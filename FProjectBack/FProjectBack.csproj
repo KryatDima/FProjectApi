@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FProject.Data\FProject.Data.csproj" />
+    <ProjectReference Include="..\FProject.Domain\FProject.Domain.csproj" />
   </ItemGroup>
 
 </Project>

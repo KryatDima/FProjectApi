@@ -14,6 +14,6 @@ namespace FProject.Data.Interfaces
         Task<int> SaveChangesAsync();
         IBasketItemRepository BasketItemRepository { get; }
         IBasketRepository BasketRepository { get; }
-
+        IUserRepository UserRepository { get; }
     }
 }
