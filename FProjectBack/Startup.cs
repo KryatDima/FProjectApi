@@ -13,6 +13,10 @@ using Microsoft.Extensions.Options;
 using FProject.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using FProject.Domain.Intefaces;
+using FProject.Domain;
+using FProject.Data.Interfaces;
+using FProject.Data.UnitOfWorks;
 
 namespace FProjectBack
 {
@@ -28,11 +32,15 @@ namespace FProjectBack
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
             services.AddDbContext<FProjectDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly(typeof(FProjectDbContext).GetTypeInfo().Assembly.GetName().Name)));
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IBrandService, BrandService>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

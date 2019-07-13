@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using FProject.Contracts;
 
 namespace FProject.Domain
 {
@@ -37,6 +38,19 @@ namespace FProject.Domain
         public async Task<List<Product>> GetListBySearchQuery(string searchQuery)
         {
             return await unitOfWork.Repository<Product>().GetQueryable().Where(x => x.Title.StartsWith(searchQuery)).Where(x=>x.IsDeleted!=true).ToListAsync();
+        }
+
+        public async Task<Product> Add(CreateProductDTO productDTO)
+        {
+            return await unitOfWork.Repository<Product>().Add(new Product()
+            {
+                BrandId = productDTO.BrandId,
+                Price=productDTO.Price,
+                Quantity=productDTO.Quantity,
+                Title=productDTO.Title,
+                ProductTypeId=productDTO.TypeId,
+                Description=productDTO.Description                
+            });
         }
     }
 }

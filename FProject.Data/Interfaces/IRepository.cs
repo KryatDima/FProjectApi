@@ -14,9 +14,9 @@ namespace FProject.Data.Interfaces
         Task<TEntity> Get(long Id);
         IQueryable<TEntity> GetQueryable();
 
-        TEntity Update(TEntity entity);
+        Task<TEntity> Update(TEntity entity);
 
-        void Delete(TEntity entity);
-        void Delete(IReadOnlyCollection<TEntity> entities);
+        bool Delete(TEntity entity);
+        bool Delete(IReadOnlyCollection<TEntity> entities);
     }
 }

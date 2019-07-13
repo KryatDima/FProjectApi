@@ -62,10 +62,7 @@ namespace FProject.Data.UnitOfWorks
             {
                 lock (createdRepositoryLock)
                 {
-                    if (!repositories.ContainsKey(typeof(TEntity)))
-                    {
-                        repositories.Add(typeof(TEntity), new Repository<TEntity>(dbContext));
-                    }
+                    repositories.Add(typeof(TEntity), new Repository<TEntity>(dbContext));
                 }
             }
 
@@ -106,9 +103,8 @@ namespace FProject.Data.UnitOfWorks
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
-                if (disposing)
-                    dbContext.Dispose();
+            if (!disposed && disposing)
+                dbContext.Dispose();
             disposed = true;
         }
         public void Dispose()

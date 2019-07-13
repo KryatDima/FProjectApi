@@ -19,7 +19,7 @@ namespace FProjectBack.Controllers
             this.service = service;
         }
 
-        [HttpGet("{id?}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(long id)
         {
             var entity = await service.Get(id);

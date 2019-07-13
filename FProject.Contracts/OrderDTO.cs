@@ -8,12 +8,10 @@ namespace FProject.Contracts
     {
         public long Id { get; set; }
 
-        public long UserId { get; set; }
-        public virtual UserDTO User { get; set; }
+        public UserDTO User { get; set; }
 
         public string Comment { get; set; }
-        //public double Cost { get; set; }
-        public bool IsDeleted { get; set; }
-        public virtual List<OrderItemsDTO> OrderItems { get; set; }
+        public decimal TotalPrice { get; set; }
+        public List<OrderItemsDTO> OrderItems { get; set; }
     }
 }

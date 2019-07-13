@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using FProject.Contracts;
+using FProject.Domain.Mapping;
 
 namespace FProject.Domain
 {
@@ -17,24 +18,27 @@ namespace FProject.Domain
 
 
 
-        public async Task<Basket> GetBasketByUserId(long userId)
+        public async Task<BasketDTO> GetBasketByUserId(long userId)
         {
             var basket = await unitOfWork.BasketRepository.GetBasketByUserId(userId);
             var basketdto = new BasketDTO
             {
                 Id = basket.Id,
-                UserId = basket.UserId,
-                BasketItems = basket.BasketItems
-                    .Where(x=>x.Basket.UserId==basket.UserId)
-                    .Select(x=>new BasketItemsDTO()
-                {
-                    BasketId =basket.Id,
-                    Basket = basket.BasketItems.
-                        FirstOrDefault(y => y.BasketId == basket.Id).Basket,
-                        
-                }),
-                User = basket.User.
+                User = UserConverter.Convert(basket.User),
+                //User = new UserDTO
+                //{
+                //    Id = basket.User.Id,
+                //    DateOfBirth = basket.User.DateOfBirth,
+                //    DeliveryAddress = basket.User.DeliveryAddress,
+                //    Email = basket.User.Email,
+                //    FirstName = basket.User.FirstName,
+                //    LastName = basket.User.LastName,
+                //    PhoneNumber = basket.User.PhoneNumber
+                //},
+                //BasketItems = basket.BasketItems
             };
+
+            //basketdto.
 
             return basketdto;//await unitOfWork.BasketRepository.GetBasketByUserId(userId);
         }
@@ -52,7 +56,7 @@ namespace FProject.Domain
         public async Task AddItem(long productId, long userId, int _quantity)
         {
             var basket = await GetBasketByUserId(userId);
-            var _item = basket.BasketItems.FirstOrDefault(x=>x.ProductId==productId);
+            var _item = basket.BasketItems.FirstOrDefault(x=>x.Product.Id==productId);
             if (_item != null)
             {
                 _item.Quantity += 1;
@@ -61,7 +65,7 @@ namespace FProject.Domain
             {
                 var item = new BasketItems { ProductId = productId, Quantity = _quantity, BasketId = basket.Id };
                 unitOfWork.BasketItemRepository.AddItem(item);
-                basket.BasketItems.Add(item);
+                //basket.BasketItems.Add(item);
                 await unitOfWork.SaveChangesAsync();
             }
                 
@@ -71,7 +75,7 @@ namespace FProject.Domain
         public async  void DeleteAllItems(long userId)
         {
             var basket =  await GetBasketByUserId(userId);
-            unitOfWork.BasketItemRepository.Delete(basket.BasketItems);
+            //unitOfWork.BasketItemRepository.Delete(basket.BasketItems);
         }
 
         public void Delete(BasketItems items)

@@ -4,14 +4,13 @@ using System.Text;
 
 namespace FProject.Contracts
 {
-    public class ProductDTO
+    public class CreateProductDTO
     {
-        public long Id { get; set; }
         public string Title { get; set; }
 
-        public ProductTypeDTO Type { get; set; }
+        public long TypeId { get; set; }
 
-        public BrandDTO Brand { get; set; }
+        public long BrandId { get; set; }
 
         public int Quantity { get; set; }
         public decimal Price { get; set; }

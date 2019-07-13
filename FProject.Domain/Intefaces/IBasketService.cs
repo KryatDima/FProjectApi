@@ -1,4 +1,5 @@
-﻿using FProject.Data.Entities;
+﻿using FProject.Contracts;
+using FProject.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace FProject.Domain.Intefaces
     {
         Task<Basket> Get(long id);
         //Task<Basket> Add(long id);
-        Task<Basket> GetBasketByUserId(long userId);
+        Task<BasketDTO> GetBasketByUserId(long userId);
         Task AddItem(long productId, long userId, int _quantity);
         void Delete(BasketItems item);
         void DeleteAllItems(long userId);

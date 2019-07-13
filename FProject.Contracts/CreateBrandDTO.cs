@@ -4,9 +4,8 @@ using System.Text;
 
 namespace FProject.Contracts
 {
-    public class BrandDTO
+    public class CreateBrandDTO
     {
-        public long Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
     }

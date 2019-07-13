@@ -8,9 +8,7 @@ namespace FProject.Contracts
     {
         public long Id { get; set; }
         public string Title { get; set; }
-        public bool IsDeleted { get; set; }
 
-        public long CategoryId { get; set; }
-        public virtual CategoryDTO Category { get; set; }
+        public CategoryDTO Category { get; set; }
     }
 }
