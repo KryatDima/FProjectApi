@@ -19,7 +19,6 @@ namespace FProject.Data.UnitOfWorks
         private bool disposed = false;
 
         private IUserRepository userRepository;
-        private IBasketItemRepository basketItemRepository;
         public IUserRepository UserRepository
         {
             get
@@ -28,14 +27,6 @@ namespace FProject.Data.UnitOfWorks
                     userRepository = new UserRepository(dbContext);
                 return userRepository;
             }
-        }
-        public IBasketItemRepository BasketItemRepository
-        {
-            get {
-                if (basketItemRepository == null)
-                    basketItemRepository = new BasketItemRepository(dbContext);
-                return basketItemRepository;
-                    }
         }
 
         public UnitOfWork(FProjectDbContext dbContext)

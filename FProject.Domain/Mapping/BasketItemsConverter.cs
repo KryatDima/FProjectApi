@@ -54,6 +54,7 @@ namespace FProject.Domain.Mapping
             return new BasketItemsDTO
             {
                 Id = id,
+                ProductId = basketItems.ProductId,
                 Quantity = basketItems.Quantity,
                 BasketId = basketItems.BasketId
             };

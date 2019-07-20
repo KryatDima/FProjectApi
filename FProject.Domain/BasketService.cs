@@ -33,7 +33,7 @@ namespace FProject.Domain
 
             if (basket == null || basket.User == null) return null;
 
-            basket.BasketItems = unitOfWork.BasketItemRepository.Get(basket.Id);
+            basket.BasketItems = unitOfWork.Repository<BasketItems>().GetQueryable().Where(b => b.BasketId == basket.Id).ToList();
             var basketdto = BasketConverter.Convert(basket);
             return basketdto;
         }
@@ -71,7 +71,7 @@ namespace FProject.Domain
                 return null;
 
             basket.BasketItems.Clear();
-            var result = unitOfWork.BasketItemRepository.Delete(BasketItemsConverter.Convert(basket.BasketItems));
+            var result = unitOfWork.Repository<BasketItems>().Delete(BasketItemsConverter.Convert(basket.BasketItems));
             if (!result) return null;
 
             return basket;
