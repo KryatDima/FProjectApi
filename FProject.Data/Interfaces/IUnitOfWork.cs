@@ -13,7 +13,6 @@ namespace FProject.Data.Interfaces
         void RollbackTransaction();
         Task<int> SaveChangesAsync();
         IBasketItemRepository BasketItemRepository { get; }
-        IBasketRepository BasketRepository { get; }
         IUserRepository UserRepository { get; }
     }
 }

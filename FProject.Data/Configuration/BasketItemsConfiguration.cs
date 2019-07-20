@@ -7,21 +7,25 @@ using System.Text;
 
 namespace FProject.Data.Configuration
 {
-    public class BasketItemsConfiguration : IEntityTypeConfiguration<BasketItems>
+    public class BasketItemsConfiguration : BaseConfiguration<BasketItems>
     {
-        public void Configure(EntityTypeBuilder<BasketItems> builder)
+        public override void ConfigureSpecific(EntityTypeBuilder<BasketItems> builder)
         {
             builder.ToTable("BasketItems");
-
-            builder.HasKey(x => new { x.BasketId, x.ProductId, x.Quantity });
-
-            builder.HasOne(x => x.Basket)
-                .WithMany(x => x.BasketItems)
-                .HasForeignKey(x => x.BasketId);
-
-            builder.HasOne(x=>x.Product)
-                .WithMany(x=>x.BasketItems)
-                .HasForeignKey(x=>x.ProductId);
         }
+        //public void Configure(EntityTypeBuilder<BasketItems> builder)
+        //{
+        //    builder.ToTable("BasketItems");
+
+        //    //builder.HasKey(x => new {x.Id/* x.BasketId, x.ProductId*//*, x.Quantity*/ });
+
+        //    //builder.HasOne(x => x.Basket)
+        //    //    .WithMany(x => x.BasketItems)
+        //    //    .HasForeignKey(x => x.BasketId);
+
+        //    //builder.HasOne(x => x.Product)
+        //    //    .WithMany(x => x.BasketItems)
+        //    //    .HasForeignKey(x => x.ProductId);
+        //}
     }
 }

@@ -9,51 +9,33 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FProjectBack.Controllers
 {
-    //class ResultDto
-    //{
-    //    public string Error { get; set; }
-    //    public object Value { get; set; }
-
-    //    public bool IsError => Error != null;
-    //}
-
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IBrandService service;
+        private readonly IUserService service;
 
-        public BrandController(IBrandService service)
+        public UserController(IUserService service)
         {
             this.service = service;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CreateBrandDTO createDto)
+        public async Task<IActionResult> Add(RegisterModelDTO createDto)
         {
-            //ResultDto result = await service.Add(createDto);
-            //if (result.IsError)
-            //{
-            //    return Ok();
-            //}
-            //else
-            //{
-            //    return BadRequest(result.Error);
-            //}
-
-            var brandDto = await service.Add(createDto);
-            if (brandDto != null)
+            var userDto = await service.CreateAsync(createDto);
+            if (userDto != null)
             {
                 return Ok();
             }
             else
             {
-                return BadRequest($"{nameof(brandDto)} is null");
+                return BadRequest($"{nameof(userDto)} is null");
             }
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(BrandDTO dto)
+        public async Task<IActionResult> Update(UserDTO dto)
         {
             var brandDto = await service.Update(dto);
             if (brandDto != null)
@@ -86,20 +68,6 @@ namespace FProjectBack.Controllers
             if (dto != null)
             {
                 return Ok(dto);
-            }
-            else
-            {
-                return NoContent();
-            }
-        }
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var dtos = service.GetAll();
-            if (dtos != null)
-            {
-                return Ok(dtos);
             }
             else
             {

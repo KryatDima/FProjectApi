@@ -1,13 +1,12 @@
-﻿using FProject.Data.Entities;
+﻿using FProject.Contracts;
+using FProject.Data.Entities;
 using FProject.Data.Interfaces;
 using FProject.Domain.Intefaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
+using FProject.Domain.Mapping;
 using Microsoft.EntityFrameworkCore;
-using FProject.Contracts;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FProject.Domain
 {
@@ -20,37 +19,124 @@ namespace FProject.Domain
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<Product> Get(long id)
+        private async Task<Product> GetProductEntity(long id)
         {
-            return await unitOfWork.Repository<Product>().Get(id);
-            
+            var product= await unitOfWork.Repository<Product>().GetQueryable()
+                .Include(x => x.Brand)
+                .Include(c => c.Category)
+                    .ThenInclude(p => p.ParentCategory)
+                .SingleOrDefaultAsync(p => p.Id == id);
+            return product;
         }
 
-        public async Task<List<Product>> GetListByFilters(Params param)
+        public async Task<List<ProductDTO>> GetProducts()
         {
-            return await unitOfWork.Repository<Product>().GetQueryable().Where(x => x.BrandId == param.BrandId)
-                .Where(x => x.ProductTypeId == param.TypeId)
-                .Where(x => x.Price >= param.PriceFrom && x.Price <= param.PriceTo)
-                .Where(x=>x.IsDeleted!=true)
-                .ToListAsync();
+            var products = await GetProductList();
+
+            if (products == null) return null;
+
+            return ProductConverter.Convert(products);
         }
 
-        public async Task<List<Product>> GetListBySearchQuery(string searchQuery)
+        private async Task<IQueryable<Product>> GetProductList()
         {
-            return await unitOfWork.Repository<Product>().GetQueryable().Where(x => x.Title.StartsWith(searchQuery)).Where(x=>x.IsDeleted!=true).ToListAsync();
+            var dtos= unitOfWork.Repository<Product>().GetQueryable()
+                .Include(x=>x.Brand)
+                .Include(c=>c.Category)
+                    .ThenInclude(p=>p.ParentCategory);
+
+            //foreach (var item in dtos)
+            //{
+            //    item.Brand = await unitOfWork.Repository<Brand>().Get(item.BrandId);
+            //    item.Category = await unitOfWork.Repository<Category>().Get(item.CategoryId);
+            //}
+
+            return await Task.FromResult(dtos);
         }
 
-        public async Task<Product> Add(CreateProductDTO productDTO)
+        public async Task<ProductDTO> Get(long id)
         {
-            return await unitOfWork.Repository<Product>().Add(new Product()
+            var product = await GetProductEntity(id);
+
+            if (product == null) return null;
+            return ProductConverter.Convert(product);
+        }
+
+        public async Task<IEnumerable<ProductDTO>> GetListByFilters(Params param)
+        {
+            var dtos = await GetProductList();
+            if(param != null)
             {
-                BrandId = productDTO.BrandId,
-                Price=productDTO.Price,
-                Quantity=productDTO.Quantity,
-                Title=productDTO.Title,
-                ProductTypeId=productDTO.TypeId,
-                Description=productDTO.Description                
-            });
+                if (param.BrandId != null)
+                {
+                    dtos = dtos.Where(x => x.BrandId == param.BrandId);
+                }
+
+                if (param.CategoryId != null)
+                {
+                    dtos = dtos.Where(x => x.CategoryId == param.CategoryId);
+                }
+
+                if (param.PriceFrom != null)
+                {
+                    dtos = dtos.Where(x => x.Price >= param.PriceFrom);
+                }
+
+                if (param.PriceTo != null)
+                {
+                    dtos = dtos.Where(x => x.Price <= param.PriceTo);
+                }                    
+            }
+            return ProductConverter.Convert(dtos);
+        }
+
+        public async Task<IEnumerable<ProductDTO>> GetListBySearchQuery(string searchQuery)
+        {
+            var entity = await unitOfWork.Repository<Product>().GetQueryable()
+                .Where(x => x.Title.Contains(searchQuery))
+                .Where(x => x.IsDeleted!=true)
+                .Include(x => x.Brand)
+                .Include(x => x.Category)
+                    .ThenInclude(x => x.ParentCategory)
+                .ToListAsync();
+
+            return ProductConverter.Convert(entity);
+        }
+
+        public async Task<ProductDTO> Add(CreateProductDTO productDTO)
+        {
+            var p = ProductConverter.Convert(productDTO);
+            p.Brand = await unitOfWork.Repository<Brand>().Get(productDTO.BrandId);
+            p.Category = await unitOfWork.Repository<Category>().GetQueryable()
+                .Include(x => x.ParentCategory)
+                .SingleOrDefaultAsync(c => c.Id == productDTO.CategoryId);
+            var product = await unitOfWork.Repository<Product>().Add(p);
+
+            return ProductConverter.Convert(product);
+        }
+
+        public async Task<ProductDTO> Update(UpdateProductDTO updateDto)
+        {
+
+            if (updateDto == null) return null;
+            var dto = ProductConverter.Convert(updateDto);
+            dto.Brand= BrandConverter.Convert(await unitOfWork.Repository<Brand>().Get(updateDto.BrandId));
+            dto.Category = CategoryConverter.Convert(unitOfWork.Repository<Category>().GetQueryable()
+                .Include(x => x.ParentCategory)
+                .SingleOrDefault(c => c.Id == updateDto.CategoryId));
+            var product = ProductConverter.Convert(dto);
+            product = await unitOfWork.Repository<Product>().Update(product);
+
+            return ProductConverter.Convert(product);
+        }
+
+        public async Task<bool> Delete(long id)
+        {
+            var entity = await GetProductEntity(id);
+            if (entity == null) return false;
+            entity.IsDeleted = true;
+            entity = await unitOfWork.Repository<Product>().Update(entity);
+            return entity.IsDeleted;
         }
     }
 }

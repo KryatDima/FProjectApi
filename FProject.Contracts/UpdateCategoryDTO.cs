@@ -4,10 +4,10 @@ using System.Text;
 
 namespace FProject.Contracts
 {
-    public class CreateProductTypeDTO
+    public class UpdateCategoryDTO
     {
+        public long Id { get; set; }
         public string Title { get; set; }
-
-        public long CategoryId { get; set; }
+        public long ParentCategoryId { get; set; }
     }
 }

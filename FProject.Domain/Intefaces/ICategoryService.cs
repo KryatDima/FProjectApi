@@ -9,7 +9,10 @@ namespace FProject.Domain.Intefaces
 {
     public interface ICategoryService
     {
-        Task<Category> Add(CreateCategoryDTO categoryDTO);
+        Task<CategoryDTO> Add(CreateCategoryDTO categoryDTO);
+        Task<CategoryDTO> Update(UpdateCategoryDTO dto);
+        Task<bool> Delete(long id);
         Task<CategoryDTO> Get(long id);
+        Task<List<CategoryDTO>> GetAll();
     }
 }

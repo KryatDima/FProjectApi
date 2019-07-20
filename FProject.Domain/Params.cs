@@ -7,7 +7,7 @@ namespace FProject.Domain
     public class Params
     {
         public long? BrandId { get; set; }
-        public long? TypeId { get; set; }
+        public long? CategoryId { get; set; }
         public int? PriceFrom { get; set; }
         public int? PriceTo { get; set; }
     }

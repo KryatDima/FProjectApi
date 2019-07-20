@@ -20,7 +20,6 @@ namespace FProject.Data.UnitOfWorks
 
         private IUserRepository userRepository;
         private IBasketItemRepository basketItemRepository;
-        private IBasketRepository basketRepository;
         public IUserRepository UserRepository
         {
             get
@@ -28,15 +27,6 @@ namespace FProject.Data.UnitOfWorks
                 if (userRepository == null)
                     userRepository = new UserRepository(dbContext);
                 return userRepository;
-            }
-        }
-        public IBasketRepository BasketRepository
-        {
-            get
-            {
-                if (basketRepository == null)
-                    basketRepository = new BasketRepository(dbContext);
-                return basketRepository;
             }
         }
         public IBasketItemRepository BasketItemRepository

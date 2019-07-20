@@ -8,9 +8,10 @@ namespace FProject.Data.Interfaces
 {
     public interface IBasketItemRepository
     {
-        void Delete(BasketItems item);
+        Task<BasketItems> Update(BasketItems item);
+        bool Delete(BasketItems item);
         void AddItem(BasketItems item);
-        void Delete(IReadOnlyCollection<BasketItems> entities);
-
+        bool Delete(IReadOnlyCollection<BasketItems> entities);
+        List<BasketItems> Get(long basketId);
     }
 }

@@ -8,11 +8,8 @@ namespace FProject.Data.Entities
         public long Id { get; set; }
         public string Title { get; set; }
 
-        //public long CategoryId { get; set; }
-        //public Category Category { get; set; }
-
-        public long ProductTypeId { get; set; }
-        public virtual ProductType Type { get; set; }
+        public long CategoryId { get; set; }
+        public virtual Category Category { get; set; }
 
         public long BrandId { get; set; }
         public virtual Brand Brand { get; set; }
@@ -22,8 +19,8 @@ namespace FProject.Data.Entities
         public string Description { get; set; }
         public bool IsDeleted { get; set; }
 
-        public virtual List<BasketItems> BasketItems { get; set; }
+        //public virtual List<BasketItems> BasketItems { get; set; }
 
-        public virtual List<OrderItems> OrderItems { get; set; }
+        //public virtual List<OrderItems> OrderItems { get; set; }
     }
 }

@@ -10,6 +10,5 @@ namespace FProject.Data.Interfaces
     {
         Task<User> GetByEmailAsync(string email);
         Task<User> GetForUserPageAsync(long id);
-        Task<User> GetWithOrdersAsync(long id);
     }
 }

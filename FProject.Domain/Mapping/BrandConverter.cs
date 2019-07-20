@@ -37,7 +37,19 @@ namespace FProject.Domain.Mapping
                 Id = brand.Id,
                 Description = brand.Description,
                 Title = brand.Title,
-                IsDeleted = false,
+                //IsDeleted = false,
+            };
+        }
+
+        public static Brand Convert(CreateBrandDTO brand)
+        {
+            if (brand == null) throw new ArgumentNullException(nameof(brand));
+
+            return new Brand
+            {
+                Title = brand.Title,
+                Description = brand.Description,
+                IsDeleted=false
             };
         }
     }

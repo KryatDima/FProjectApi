@@ -3,7 +3,9 @@ using FProject.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FProject.Data.Repositories
 {
@@ -16,9 +18,11 @@ namespace FProject.Data.Repositories
             this.dbContext = dbContext;
         }
 
-        public void Delete(BasketItems item)
+        public bool Delete(BasketItems item)
         {
-            dbContext.Set<BasketItems>().Remove(item);
+            //if(dbContext.Set<BasketItems>().Remove(item))
+            var a = dbContext.Set<BasketItems>().Remove(item).State;
+            return  a==EntityState.Deleted;
         }
 
         public void AddItem(BasketItems item)
@@ -26,16 +30,34 @@ namespace FProject.Data.Repositories
             dbContext.Set<BasketItems>().Add(item);
         }
 
-        public void Delete(IReadOnlyCollection<BasketItems> entities)
+        public bool Delete(IReadOnlyCollection<BasketItems> entities)
         {
             if (dbContext.Entry(entities).State == EntityState.Detached)
             {
                 dbContext.Attach(entities);
             }
 
-            dbContext.Remove(entities);
-
+            var result=dbContext.Remove(entities).State;
+            return result==EntityState.Deleted;
         }
 
+        public async Task<BasketItems> Update(BasketItems item)
+        {
+            var updatedEntity = dbContext.Update(item);
+            await dbContext.SaveChangesAsync();
+            return updatedEntity.Entity;
+        }
+
+        public List<BasketItems> Get(long basketId)
+        {
+            return dbContext.Set<BasketItems>().Where(bi => bi.BasketId == basketId)
+                //.Include(b => b.Basket)
+                //    .ThenInclude(u => u.User)
+                .Include(p => p.Product)
+                    .ThenInclude(b => b.Brand)
+                    .Include(c => c.Product.Category)
+                        .ThenInclude(pc => pc.ParentCategory)
+                .ToList();
+        }
     }
 }

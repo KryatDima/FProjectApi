@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace FProject.Domain.Intefaces
 {
-    public interface IProductTypeService
+    public interface IAutentificationService
     {
-        Task<ProductType> Add(CreateProductTypeDTO categoryDTO);
-        Task<ProductTypeDTO> Get(long id);
+        Task<UserDTO> Authenticate(string email, string password);
     }
 }

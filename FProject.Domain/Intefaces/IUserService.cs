@@ -1,4 +1,5 @@
-﻿using FProject.Data.Entities;
+﻿using FProject.Contracts;
+using FProject.Data.Entities;
 using FProject.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,11 @@ namespace FProject.Domain.Intefaces
 {
     public interface IUserService
     {
-        Task<User> Get(long id);
-        Task<User> AuthenticateAsync(string username, string password);
-        Task<User> CreateAsync(RegisterModel model);
-        //Task<User> 
+        //Task<IEnumerable<UserDTO>> GetAll();
+        Task<UserDTO> Get(long id);
+        Task<UserDTO> CreateAsync(RegisterModelDTO model);
+        Task<UserDTO> Update(UserDTO userP);
+        Task<bool> Delete(long id);
+
     }
 }

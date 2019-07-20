@@ -40,6 +40,7 @@ namespace FProject.Data.Repositories
             }
 
             var deleted = DbContext.Remove(entity);
+            DbContext.SaveChanges();
             return deleted.State == EntityState.Deleted;
         }
 

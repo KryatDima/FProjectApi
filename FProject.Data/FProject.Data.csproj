@@ -14,8 +14,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FProject.Contracts\FProject.Contracts.csproj" />
-  </ItemGroup>
-
 </Project>

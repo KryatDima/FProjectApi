@@ -11,7 +11,7 @@ namespace FProject.Data.Entities
         public virtual User User { get; set; }
 
         public string Comment { get; set; }
-        //public double Cost { get; set; }
+        public decimal TotalPrice { get; set; }
         public bool IsDeleted { get; set; }
         public virtual List<OrderItems> OrderItems { get; set; }
     }

@@ -9,6 +9,5 @@ namespace FProject.Contracts
         public long Id { get; set; }
         public string Title { get; set; }
         public CategoryDTO ParentCategory { get; set; }
-        public List<ProductTypeDTO> ProductTypes { get; set; }
     }
 }

@@ -9,60 +9,42 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FProjectBack.Controllers
 {
-    //class ResultDto
-    //{
-    //    public string Error { get; set; }
-    //    public object Value { get; set; }
-
-    //    public bool IsError => Error != null;
-    //}
-
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-        private readonly IBrandService service;
+        private readonly ICategoryService service;
 
-        public BrandController(IBrandService service)
+        public CategoryController(ICategoryService service)
         {
             this.service = service;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CreateBrandDTO createDto)
+        public async Task<IActionResult> Add(CreateCategoryDTO createDto)
         {
-            //ResultDto result = await service.Add(createDto);
-            //if (result.IsError)
-            //{
-            //    return Ok();
-            //}
-            //else
-            //{
-            //    return BadRequest(result.Error);
-            //}
-
-            var brandDto = await service.Add(createDto);
-            if (brandDto != null)
+            var categoryDto = await service.Add(createDto);
+            if (categoryDto != null)
             {
                 return Ok();
             }
             else
             {
-                return BadRequest($"{nameof(brandDto)} is null");
+                return BadRequest($"{nameof(categoryDto)} is null");
             }
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(BrandDTO dto)
+        public async Task<IActionResult> Update(UpdateCategoryDTO dto)
         {
-            var brandDto = await service.Update(dto);
-            if (brandDto != null)
+            var categoryDto = await service.Update(dto);
+            if (categoryDto != null)
             {
                 return Ok();
             }
             else
             {
-                return BadRequest($"{nameof(brandDto)} is null");
+                return BadRequest($"{nameof(categoryDto)} is null");
             }
         }
 
@@ -94,12 +76,12 @@ namespace FProjectBack.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var dtos = service.GetAll();
-            if (dtos != null)
+            var dto = await service.GetAll();
+            if (dto != null)
             {
-                return Ok(dtos);
+                return Ok(dto);
             }
             else
             {

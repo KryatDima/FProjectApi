@@ -22,5 +22,40 @@ namespace FProject.Domain.Mapping
                 TotalPrice = order.OrderItems.Select(p => p.Product.Price).Sum()
             };
         }
+
+        public static Order Convert(OrderDTO order)
+        {
+            if (order == null) throw new ArgumentNullException(nameof(order));
+
+            return new Order
+            {
+                Id = order.Id,
+                Comment = order.Comment,
+                User = UserConverter.Convert(order.User),
+                OrderItems = OrderItemsConverter.Convert(order.OrderItems),
+                TotalPrice = order.OrderItems.Select(p => p.Product.Price).Sum(),
+                UserId = order.User.Id,
+            };
+        }
+
+        public static List<OrderDTO> Convert(IEnumerable<Order> order)
+        {
+            if (order == null) throw new ArgumentNullException(nameof(order));
+
+            var dtos = order.Select(o => Convert(o)).ToList();
+            return dtos;
+        }
+
+        public static OrderDTO Convert(BasketDTO basketDTO)
+        {
+            if (basketDTO == null) throw new ArgumentNullException(nameof(basketDTO));
+
+            return new OrderDTO
+            {
+                TotalPrice = basketDTO.BasketItems.Select(p => p.Product.Price).Sum(),
+                User = basketDTO.User,
+                OrderItems = OrderItemsConverter.Convert(basketDTO.BasketItems)
+            };
+        }
     }
 }

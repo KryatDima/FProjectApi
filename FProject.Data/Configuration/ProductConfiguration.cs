@@ -14,8 +14,7 @@ namespace FProject.Data.Configuration
             builder.ToTable("Product");
 
             builder.HasOne(x => x.Brand);
-            //builder.HasOne(x => x.Category);
-            builder.HasOne(x => x.Type);
+            builder.HasOne(x => x.Category);
         }
     }
 }

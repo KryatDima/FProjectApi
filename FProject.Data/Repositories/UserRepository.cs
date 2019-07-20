@@ -23,15 +23,7 @@ namespace FProject.Data.Repositories
         public async Task<User> GetForUserPageAsync(long id)
         {
             return await DbContext.Set<User>().Where(x => x.Id == id)
-                .Include(x => x.Orders)
                 .FirstOrDefaultAsync();
-        }
-
-        public async Task<User> GetWithOrdersAsync(long id)
-        {
-            return await DbContext.Set<User>().Where(x => x.Id == id)
-                .Include(x => x.Orders)
-                .FirstAsync();
         }
     }
 }

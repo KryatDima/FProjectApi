@@ -13,21 +13,16 @@ namespace FProject.Domain
 {
     public class BrandService : IBrandService
     {
-        public IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
         public BrandService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<BrandDTO> Add(CreateBrandDTO brandDTO) // TODO add mapping for CreateBrandDto
+        public async Task<BrandDTO> Add(CreateBrandDTO brandDTO) // TODO add mapping for CreateBrandDto  +
         {
-            var entity = await unitOfWork.Repository<Brand>().Add(new Brand
-            {
-                Description = brandDTO.Description,
-                Title = brandDTO.Title,
-                IsDeleted = false
-            });
+            var entity = await unitOfWork.Repository<Brand>().Add(BrandConverter.Convert(brandDTO));
 
             if (entity == null) return null;
             return BrandConverter.Convert(entity);

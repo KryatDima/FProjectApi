@@ -4,9 +4,9 @@ using System.Text;
 
 namespace FProject.Contracts
 {
-    public class OrderItemsDTO
+    public class CreateBasketItemsDTO
     {
-        public long OrderId { get; set; }
+        public long BasketId { get; set; }
 
         public ProductDTO Product { get; set; }
 

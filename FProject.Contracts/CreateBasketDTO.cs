@@ -4,8 +4,8 @@ using System.Text;
 
 namespace FProject.Contracts
 {
-    public class BasketItemsDTO : CreateBasketItemsDTO
+    public class CreateBasketDTO
     {
-        public long Id { get; set; }
+        public UserDTO User { get; set; }
     }
 }

@@ -9,14 +9,11 @@ namespace FProject.Domain.Intefaces
 {
     public interface IBasketService
     {
-        Task<Basket> Get(long id);
-        //Task<Basket> Add(long id);
+        Task<BasketDTO> Create(long userId);
+        Task<BasketDTO> Get(long id);
         Task<BasketDTO> GetBasketByUserId(long userId);
-        Task AddItem(long productId, long userId, int _quantity);
-        void Delete(BasketItems item);
-        void DeleteAllItems(long userId);
-
-        //void DeleteAllItems(long userId);
-        
+        Task<BasketDTO> AddItem(CreateBasketItemsDTO dto,long userId);
+        Task<BasketDTO> Delete(BasketItemsDTO item, long userId);
+        Task<BasketDTO> DeleteAllItems(long userId);
     }
 }
