@@ -22,9 +22,6 @@ namespace FProject.Domain
         private async Task<Product> GetProductEntity(long id)
         {
             var product= await unitOfWork.Repository<Product>().GetQueryable()
-                .Include(x => x.Brand)
-                .Include(c => c.Category)
-                    .ThenInclude(p => p.ParentCategory)
                 .SingleOrDefaultAsync(p => p.Id == id);
             return product;
         }
@@ -40,16 +37,7 @@ namespace FProject.Domain
 
         private async Task<IQueryable<Product>> GetProductList()
         {
-            var dtos= unitOfWork.Repository<Product>().GetQueryable()
-                .Include(x=>x.Brand)
-                .Include(c=>c.Category)
-                    .ThenInclude(p=>p.ParentCategory);
-
-            //foreach (var item in dtos)
-            //{
-            //    item.Brand = await unitOfWork.Repository<Brand>().Get(item.BrandId);
-            //    item.Category = await unitOfWork.Repository<Category>().Get(item.CategoryId);
-            //}
+            var dtos = unitOfWork.Repository<Product>().GetQueryable();
 
             return await Task.FromResult(dtos);
         }
@@ -95,9 +83,6 @@ namespace FProject.Domain
             var entity = await unitOfWork.Repository<Product>().GetQueryable()
                 .Where(x => x.Title.Contains(searchQuery))
                 .Where(x => x.IsDeleted!=true)
-                .Include(x => x.Brand)
-                .Include(x => x.Category)
-                    .ThenInclude(x => x.ParentCategory)
                 .ToListAsync();
 
             return ProductConverter.Convert(entity);
@@ -106,10 +91,6 @@ namespace FProject.Domain
         public async Task<ProductDTO> Add(CreateProductDTO productDTO)
         {
             var p = ProductConverter.Convert(productDTO);
-            p.Brand = await unitOfWork.Repository<Brand>().Get(productDTO.BrandId);
-            p.Category = await unitOfWork.Repository<Category>().GetQueryable()
-                .Include(x => x.ParentCategory)
-                .SingleOrDefaultAsync(c => c.Id == productDTO.CategoryId);
             var product = await unitOfWork.Repository<Product>().Add(p);
 
             return ProductConverter.Convert(product);
@@ -117,13 +98,8 @@ namespace FProject.Domain
 
         public async Task<ProductDTO> Update(UpdateProductDTO updateDto)
         {
-
             if (updateDto == null) return null;
             var dto = ProductConverter.Convert(updateDto);
-            dto.Brand= BrandConverter.Convert(await unitOfWork.Repository<Brand>().Get(updateDto.BrandId));
-            dto.Category = CategoryConverter.Convert(unitOfWork.Repository<Category>().GetQueryable()
-                .Include(x => x.ParentCategory)
-                .SingleOrDefault(c => c.Id == updateDto.CategoryId));
             var product = ProductConverter.Convert(dto);
             product = await unitOfWork.Repository<Product>().Update(product);
 

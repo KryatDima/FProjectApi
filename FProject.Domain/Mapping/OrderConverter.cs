@@ -52,7 +52,7 @@ namespace FProject.Domain.Mapping
 
             return new OrderDTO
             {
-                TotalPrice = basketDTO.BasketItems.Select(p => p.Product.Price).Sum(),
+                //TotalPrice = basketDTO.BasketItems.Select(p => p.Product.Price).Sum(),
                 User = basketDTO.User,
                 OrderItems = OrderItemsConverter.Convert(basketDTO.BasketItems)
             };

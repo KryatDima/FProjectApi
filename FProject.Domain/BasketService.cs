@@ -16,13 +16,12 @@ namespace FProject.Domain
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IProductService productService;
+
         public BasketService(IUnitOfWork unitOfWork, IProductService productService)
         {
             this.unitOfWork = unitOfWork;
             this.productService = productService;
         }
-
-
 
         public async Task<BasketDTO> GetBasketByUserId(long userId)
         {
@@ -44,39 +43,24 @@ namespace FProject.Domain
             if (dto == null) return null;
             var basket = await GetBasketByUserId(userId);
             basket.BasketItems = basket.BasketItems ?? new List<BasketItemsDTO>();
-            var _item = basket.BasketItems.SingleOrDefault(x=>x.Product.Id==dto.Product.Id);
+            var _item = basket.BasketItems.SingleOrDefault(x=>x.ProductId==dto.ProductId);
             if (_item != null)
             {
-                //_item.Quantity += 1;
-                //var entity = BasketItemsConverter.Convert(_item);
-                ////storeContext.Entry<Store>(s1).State = EntityState.Detached;
-                //await unitOfWork.BasketItemRepository.Update();
-
-                //var item = basket.BasketItems.FirstOrDefault(f => f.Product.Id == dto.Product.Id);
-                
-                if (_item != null && _item.Product.Quantity >= dto.Quantity + _item.Quantity)
+                var product = await productService.Get(_item.ProductId);
+                if (_item != null && product.Quantity >= dto.Quantity + _item.Quantity)
                 {
                     _item.Quantity += dto.Quantity;
                 }
 
                 await unitOfWork.Repository<BasketItems>().Update(BasketItemsConverter.Convert(_item));
-
-                //await unitOfWork.BasketItemRepository.Update(BasketItemsConverter.Convert(item));
             }
             else
             {
                 var item = BasketItemsConverter.Convert(dto);
                 var productDto = await productService.Get(item.ProductId);
-                dto.Product = productDto;
-                item.Product = ProductConverter.Convert(productDto);
-                //item.Basket = BasketConverter.Convert(basket);
-                await unitOfWork.Repository<BasketItems>().Add(item);
+                item = await unitOfWork.Repository<BasketItems>().Add(item);
                 basket.BasketItems.Add(BasketItemsConverter.Convert(dto, item.Id));
-                //var basketEntity = BasketConverter.Convert(basket);
-                ////basketEntity.BasketItems.ForEach(x => x.Basket = basketEntity);
-                //await unitOfWork.Repository<Basket>().Update(basketEntity);
             }
-            //await unitOfWork.SaveChangesAsync();
             return basket;
         }
 
@@ -96,8 +80,11 @@ namespace FProject.Domain
         public async Task<BasketDTO> Delete(BasketItemsDTO item, long userId)
         {
             var basket = await GetBasketByUserId(userId);///??
-            if (basket == null || !basket.BasketItems.Any())
+            if (basket == null)
                 return null;
+
+            if (!basket.BasketItems.Any())
+                return basket;
 
             basket.BasketItems.Remove(item);
             var result = unitOfWork.Repository<BasketItems>().Delete(BasketItemsConverter.Convert(item));
@@ -111,7 +98,6 @@ namespace FProject.Domain
         {
             return BasketConverter.Convert(await unitOfWork.Repository<Basket>().GetQueryable().Where(x => x.Id == id)
                 .Include(x => x.BasketItems)
-                    .ThenInclude(x => x.Product)
                 .FirstOrDefaultAsync());
         }
 

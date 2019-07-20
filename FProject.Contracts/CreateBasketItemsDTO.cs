@@ -8,7 +8,7 @@ namespace FProject.Contracts
     {
         public long BasketId { get; set; }
 
-        public ProductDTO Product { get; set; }
+        public long ProductId { get; set; }
 
         public int Quantity { get; set; }
     }

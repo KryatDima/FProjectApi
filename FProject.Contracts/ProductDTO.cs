@@ -9,9 +9,9 @@ namespace FProject.Contracts
         public long Id { get; set; }
         public string Title { get; set; }
 
-        public CategoryDTO Category { get; set; }
+        public long CategoryId { get; set; }
 
-        public BrandDTO Brand { get; set; }
+        public long BrandId { get; set; }
 
         public int Quantity { get; set; }
         public decimal Price { get; set; }

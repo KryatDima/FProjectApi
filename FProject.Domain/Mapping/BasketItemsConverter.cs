@@ -16,7 +16,7 @@ namespace FProject.Domain.Mapping
             return new BasketItemsDTO
             {
                 Id = basketItems.Id,
-                Product = ProductConverter.Convert(basketItems.Product),
+                ProductId = basketItems.ProductId,
                 Quantity = basketItems.Quantity,
                 BasketId = basketItems.BasketId
             };
@@ -29,10 +29,9 @@ namespace FProject.Domain.Mapping
             return new BasketItems
             {
                 Id = basketItems.Id,
-                ProductId = basketItems.Product.Id,
+                ProductId = basketItems.ProductId,
                 Quantity = basketItems.Quantity,
-                BasketId = basketItems.BasketId,
-                Product = ProductConverter.Convert(basketItems.Product)
+                BasketId = basketItems.BasketId
             };
         }
 
@@ -42,10 +41,9 @@ namespace FProject.Domain.Mapping
 
             return new BasketItems
             {
-                ProductId = basketItems.Product.Id,
+                ProductId = basketItems.ProductId,
                 Quantity = basketItems.Quantity,
-                BasketId = basketItems.BasketId,
-                Product = ProductConverter.Convert(basketItems.Product)
+                BasketId = basketItems.BasketId
             };
         }
 
@@ -57,8 +55,7 @@ namespace FProject.Domain.Mapping
             {
                 Id = id,
                 Quantity = basketItems.Quantity,
-                BasketId = basketItems.BasketId,
-                Product = basketItems.Product
+                BasketId = basketItems.BasketId
             };
         }
 

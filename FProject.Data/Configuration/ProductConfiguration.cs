@@ -12,9 +12,6 @@ namespace FProject.Data.Configuration
         public override void ConfigureSpecific(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable("Product");
-
-            builder.HasOne(x => x.Brand);
-            builder.HasOne(x => x.Category);
         }
     }
 }

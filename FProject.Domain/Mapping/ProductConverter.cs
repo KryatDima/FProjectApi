@@ -17,12 +17,12 @@ namespace FProject.Domain.Mapping
             return new ProductDTO
             {
                 Id = product.Id,
-                Brand = BrandConverter.Convert(product.Brand),
+                BrandId = product.BrandId,
                 Description = product.Description,
                 Price = product.Price,
                 Quantity = product.Quantity,
                 Title = product.Title,
-                Category = CategoryConverter.Convert(product.Category)
+                CategoryId = product.CategoryId
             };
         }
 
@@ -33,14 +33,12 @@ namespace FProject.Domain.Mapping
             return new Product
             {
                 Id = product.Id,
-                Brand = BrandConverter.Convert(product.Brand),
-                BrandId = product.Brand.Id,
+                BrandId = product.BrandId,
                 Description = product.Description,
                 Price = product.Price,
                 Quantity = product.Quantity,
                 Title = product.Title,
-                Category = CategoryConverter.Convert(product.Category),
-                CategoryId = product.Category.Id
+                CategoryId = product.CategoryId
             };
         }
 
@@ -77,7 +75,7 @@ namespace FProject.Domain.Mapping
             {
                 Id = product.Id,
                 Title = product.Title,
-                //BrandId = product.BrandId,
+                BrandId = product.BrandId,
 
                 //CategoryId = product.CategoryId,
                 Description = product.Description,
@@ -95,8 +93,8 @@ namespace FProject.Domain.Mapping
             {
                 Id = product.Id,
                 Title = product.Title,
-                //BrandId = product.BrandId,
-                
+                BrandId = product.BrandId,
+
                 //CategoryId = product.CategoryId,
                 Description = product.Description,
                 Price = product.Price,

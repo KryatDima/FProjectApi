@@ -12,12 +12,6 @@ namespace FProject.Domain.Mapping
         {
             if (basket == null) throw new ArgumentNullException(nameof(basket));
 
-                //return new BasketDTO
-                //{
-                //    Id = basket.Id,
-                //    BasketItems=BasketItemsConverter.Convert(basket.BasketItems),
-                //    User=UserConverter.Convert(basket.User)
-                //};
             var dto = new BasketDTO
             {
                 Id = basket.Id,

@@ -20,7 +20,6 @@ namespace FProject.Data.Repositories
 
         public bool Delete(BasketItems item)
         {
-            //if(dbContext.Set<BasketItems>().Remove(item))
             var a = dbContext.Set<BasketItems>().Remove(item).State;
             return  a==EntityState.Deleted;
         }
@@ -51,12 +50,6 @@ namespace FProject.Data.Repositories
         public List<BasketItems> Get(long basketId)
         {
             return dbContext.Set<BasketItems>().Where(bi => bi.BasketId == basketId)
-                //.Include(b => b.Basket)
-                //    .ThenInclude(u => u.User)
-                .Include(p => p.Product)
-                    .ThenInclude(b => b.Brand)
-                    .Include(c => c.Product.Category)
-                        .ThenInclude(pc => pc.ParentCategory)
                 .ToList();
         }
     }

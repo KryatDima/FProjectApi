@@ -59,7 +59,7 @@ namespace FProject.Domain.Mapping
 
             return new OrderItemsDTO
             {
-                Product = basketItems.Product,
+                //Product = basketItems.Product,
                 Quantity = basketItems.Quantity,
                 //OrderId = // set some value
             };
