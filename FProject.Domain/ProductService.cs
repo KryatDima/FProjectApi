@@ -37,7 +37,7 @@ namespace FProject.Domain
 
         private async Task<IQueryable<Product>> GetProductList()
         {
-            var dtos = unitOfWork.Repository<Product>().GetQueryable();
+            var dtos = unitOfWork.Repository<Product>().GetQueryable().Where(x=>x.IsDeleted==false);
 
             return await Task.FromResult(dtos);
         }
@@ -85,11 +85,13 @@ namespace FProject.Domain
                 .Where(x => x.IsDeleted!=true)
                 .ToListAsync();
 
+            if (entity == null) return null;
             return ProductConverter.Convert(entity);
         }
 
         public async Task<ProductDTO> Add(CreateProductDTO productDTO)
         {
+            if (productDTO == null) return null;
             var p = ProductConverter.Convert(productDTO);
             var product = await unitOfWork.Repository<Product>().Add(p);
 

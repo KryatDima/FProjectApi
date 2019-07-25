@@ -96,9 +96,12 @@ namespace FProject.Domain
 
         public async Task<BasketDTO> Get(long id)
         {
-            return BasketConverter.Convert(await unitOfWork.Repository<Basket>().GetQueryable().Where(x => x.Id == id)
+            var basket = await unitOfWork.Repository<Basket>().GetQueryable().Where(x => x.Id == id)
                 .Include(x => x.BasketItems)
-                .FirstOrDefaultAsync());
+                .FirstOrDefaultAsync();
+
+            if (basket == null) return null;
+            return BasketConverter.Convert(basket);
         }
 
         public async Task<BasketDTO> Create(long userId)

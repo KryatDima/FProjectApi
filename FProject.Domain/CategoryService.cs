@@ -51,6 +51,8 @@ namespace FProject.Domain
             var categories = unitOfWork.Repository<Category>().GetQueryable()
                 .Include(x => x.ParentCategory)
                 .ToList();
+
+            if (categories == null) return null;
             return await Task.FromResult(CategoryConverter.Convert(categories));
         }
 

@@ -52,7 +52,12 @@ namespace FProject.Domain
             return BrandConverter.Convert(brand);
         }
 
-        public List<BrandDTO> GetAll() => BrandConverter.Convert(unitOfWork.Repository<Brand>().GetQueryable().Where(b => b.IsDeleted == false));
+        public List<BrandDTO> GetAll()
+        {
+            var brands = unitOfWork.Repository<Brand>().GetQueryable().Where(b => b.IsDeleted == false);
+            if (brands == null) return null;
+            return BrandConverter.Convert(brands);
+        }
 
         private async Task<Brand> GetBrandEntity(long id) => await unitOfWork.Repository<Brand>().Get(id);
     }

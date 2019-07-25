@@ -14,29 +14,36 @@ namespace FProject.Domain
     public class OrderService : IOrderService
     {
         private readonly IUnitOfWork unitOfWork;
-        public OrderService(IUnitOfWork unitOfWork)
+        private readonly IBasketService basketService;
+        public OrderService(IUnitOfWork unitOfWork,IBasketService basketService)
         {
             this.unitOfWork = unitOfWork;
+            this.basketService = basketService;
+
         }
 
         public async Task<OrderDTO> Create(BasketDTO dto, string comment/*, string address*/)
         {
+            if (dto == null) return null;
             var orderDto = OrderConverter.Convert(dto);
             orderDto.Comment = comment;
             var order = OrderConverter.Convert(orderDto);
             order.IsDeleted = false;
             var a = await unitOfWork.Repository<Order>().Add(order);
-            return orderDto;
+            await basketService.DeleteAllItems(a.UserId);
+            return OrderConverter.Convert(a);
         }
 
         public async Task<OrderDTO> Get(long id)
         {
-            return OrderConverter.Convert(await unitOfWork.Repository<Order>().Get(id));
+            var order = await unitOfWork.Repository<Order>().Get(id);
+            if (order == null) return null;
+            return OrderConverter.Convert(order);
         }
 
         public async Task<List<OrderDTO>> GetAllForUser(long userId)
         {
-            var orders = unitOfWork.Repository<Order>().GetQueryable().Where(u => u.UserId == userId);
+            var orders = unitOfWork.Repository<Order>().GetQueryable().Where(u => u.UserId == userId).Where(x=>x.IsDeleted!=true);
             if (orders == null)
                 return null;
             return await Task.FromResult(OrderConverter.Convert(orders));
@@ -44,7 +51,7 @@ namespace FProject.Domain
 
         public async Task<List<OrderDTO>> GetAll()
         {
-            var orders = unitOfWork.Repository<Order>().GetQueryable();
+            var orders = unitOfWork.Repository<Order>().GetQueryable().Where(x=>x.IsDeleted!=true);
             if (orders == null)
                 return null;
             return await Task.FromResult(OrderConverter.Convert(orders));
