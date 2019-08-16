@@ -10,5 +10,7 @@ namespace FProject.Domain.Intefaces
     {
         Task<OrderDTO> Create(BasketDTO dto, string comment/*, string address*/);
         Task<OrderDTO> Get(long id);
+        Task<List<OrderDTO>> GetAllForUser(long userId);
+        Task<List<OrderDTO>> GetAll();
     }
 }

@@ -95,7 +95,7 @@ namespace FProject.Domain.Mapping
                 Title = product.Title,
                 BrandId = product.BrandId,
 
-                //CategoryId = product.CategoryId,
+                CategoryId = product.CategoryId,
                 Description = product.Description,
                 Price = product.Price,
                 Quantity = product.Quantity,
