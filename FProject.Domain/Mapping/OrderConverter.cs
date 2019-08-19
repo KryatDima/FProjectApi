@@ -9,6 +9,20 @@ namespace FProject.Domain.Mapping
 {
     public static class OrderConverter
     {
+        public static Order Convert(CreateOrderDTO dto)
+        {
+            if (dto == null) throw new ArgumentNullException(nameof(dto));
+
+            return new Order
+            {
+                
+                Comment = dto.Comment,
+                User = UserConverter.Convert(dto.User),
+                UserId=dto.User.Id,
+                OrderItems = OrderItemsConverter.Convert(dto.OrderItems),
+                TotalPrice = dto.OrderItems.Select(p => p.Product.Price).Sum()
+            };
+        }
         public static OrderDTO Convert(Order order)
         {
             if (order == null) throw new ArgumentNullException(nameof(order));

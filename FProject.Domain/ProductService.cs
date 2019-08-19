@@ -50,7 +50,7 @@ namespace FProject.Domain
             return ProductConverter.Convert(product);
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetListByFilters(Params param)
+        public async Task<IEnumerable<ProductDTO>> GetListByFilters(Params param = null)
         {
             var dtos = await GetProductList();
             if(param != null)
@@ -104,7 +104,6 @@ namespace FProject.Domain
             var dto = ProductConverter.Convert(updateDto);
             var product = ProductConverter.Convert(dto);
             product = await unitOfWork.Repository<Product>().Update(product);
-
             return ProductConverter.Convert(product);
         }
 

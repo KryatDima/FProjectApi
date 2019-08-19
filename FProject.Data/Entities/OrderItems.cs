@@ -7,7 +7,7 @@ namespace FProject.Data.Entities
     public class OrderItems
     {
         public long OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        
 
         public long ProductId { get; set; }
         public virtual Product Product { get; set; }

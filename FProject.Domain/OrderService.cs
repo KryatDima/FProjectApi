@@ -22,12 +22,12 @@ namespace FProject.Domain
 
         }
 
-        public async Task<OrderDTO> Create(BasketDTO dto, string comment/*, string address*/)
+        public async Task<OrderDTO> Create(CreateOrderDTO dto)
         {
             if (dto == null) return null;
-            var orderDto = OrderConverter.Convert(dto);
-            orderDto.Comment = comment;
-            var order = OrderConverter.Convert(orderDto);
+            //var orderDto = OrderConverter.Convert(dto);
+            //orderDto.Comment = comment;
+            var order = OrderConverter.Convert(dto);
             order.IsDeleted = false;
             var a = await unitOfWork.Repository<Order>().Add(order);
             await basketService.DeleteAllItems(a.UserId);

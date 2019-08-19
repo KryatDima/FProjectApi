@@ -15,9 +15,7 @@ namespace FProject.Data.Configuration
 
             builder.HasKey(x => new { x.OrderId, x.ProductId, x.Quantity });
 
-            builder.HasOne(x => x.Order)
-                .WithMany(x => x.OrderItems)
-                .HasForeignKey(x => x.OrderId);
+           
 
             //builder.HasOne(x => x.Product)
             //    .WithMany(x => x.OrderItems)

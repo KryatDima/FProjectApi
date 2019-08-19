@@ -1,0 +1,20 @@
+﻿@model FProjectMVC.Models.ProductViewModel
+
+
+@{
+    ViewData["Title"] = "GetProductById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>GetProductById</h1>
+
+<div>
+    <div>Title: @Model.Title</div>
+    <div>Brand: @Model.brand.Title</div>
+    <div>Category: @Model.category.Title</div>
+    <div>Price: @Model.Price</div>
+    <div>Description: @Model.Description</div>
+    <p>@Html.ActionLink("Add to Basket", "Add", "Basket", new { productId = Model.Id }, null)</p>
+    <p>@Html.ActionLink("Edit", "Update", "Product", new { id = Model.Id }, null)</p>
+    <p>@Html.ActionLink("Delete", "Delete", "Product", new { id = Model.Id }, null)</p>
+</div>

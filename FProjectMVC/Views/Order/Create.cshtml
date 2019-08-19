@@ -1,0 +1,48 @@
+﻿@model FProjectMVC.Models.CreateOrderViewModel
+
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<div>Owner: @Model.User.FirstName @Model.User.LastName</div>
+<div>
+    Items: 
+    
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                </tr>@foreach (var item in Model.items)
+                {
+                    <tr>
+                        <td>@item.Product.Title</td>
+                        <td>@item.Product.Price</td>
+                        <td>@item.Quantity</td>
+                    </tr>
+                }
+                    
+            </table>
+        </div>
+    
+</div>
+<div>Total sum = @Model.TotalPrice</div>
+<div>
+    @using (Html.BeginForm("AddO", "Order", FormMethod.Post))
+    {
+        <div>Comment: @Html.TextBoxFor(x => x.Comment, new { placeholder = "Comment", @class = "form-control", required = "required" })</div>
+
+        <button type="submit">Save</button>
+    }
+</div>

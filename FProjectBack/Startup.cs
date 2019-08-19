@@ -53,6 +53,7 @@ namespace FProjectBack
             services.AddTransient<IHasherService, HasherService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBasketService, BasketService>();
+            services.AddTransient<IOrderService, OrderService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

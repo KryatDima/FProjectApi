@@ -1,0 +1,20 @@
+﻿@model FProjectMVC.Models.BrandListViewModel
+
+@{
+    ViewData["Title"] = "GetAllBrands";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>GetAllBrands</h1>
+
+<div>
+    @foreach (var brand in Model.Brands)
+    {
+        <div>
+            <div>Title:@Html.ActionLink(brand.Title, "GetBrandById", "Brand", new { id = brand.Id }, null)</div>
+        </div>
+    }
+    <div>
+        <p>@Html.ActionLink("Add New Brand", "Add", "Brand")</p>
+    </div>
+</div>

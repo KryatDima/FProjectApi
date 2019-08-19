@@ -68,8 +68,8 @@ namespace FProjectBack.Controllers
         //    return Ok();
         //}
 
-        [HttpGet("filters")]
-        public async Task<IActionResult> GetListByFilters(Params param)
+        [HttpPost("filters")]
+        public async Task<IActionResult> GetListByFilters(Params param=null)
         {
             var dtos = await service.GetListByFilters(param);
             if (dtos != null)

@@ -1,0 +1,18 @@
+﻿@model FProjectMVC.Models.CategoryViewModel
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Update</h1>
+
+<div>
+    @using (Html.BeginForm("UpdateCategoryS", "Category", FormMethod.Post))
+
+    {
+        @Html.HiddenFor(x => x.Id)
+        @Html.TextBoxFor(x => x.Title, new { placeholder = "Title", @class = "form-control", required = "required" })
+        <button type="submit">Save</button>
+    }
+</div>

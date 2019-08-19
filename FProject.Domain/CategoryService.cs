@@ -50,6 +50,7 @@ namespace FProject.Domain
         {
             var categories = unitOfWork.Repository<Category>().GetQueryable()
                 .Include(x => x.ParentCategory)
+                .Where(x=>x.IsDeleted!=true)
                 .ToList();
 
             if (categories == null) return null;

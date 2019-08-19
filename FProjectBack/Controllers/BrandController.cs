@@ -31,15 +31,7 @@ namespace FProjectBack.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CreateBrandDTO createDto)
         {
-            //ResultDto result = await service.Add(createDto);
-            //if (result.IsError)
-            //{
-            //    return Ok();
-            //}
-            //else
-            //{
-            //    return BadRequest(result.Error);
-            //}
+            
 
             var brandDto = await service.Add(createDto);
             if (brandDto != null)

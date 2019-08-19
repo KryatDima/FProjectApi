@@ -35,7 +35,7 @@ namespace FProjectBack.Controllers
         }
 
         [HttpPost("{userId}")]
-        public async Task<IActionResult> AddItem(BasketItemsDTO item, long userId)
+        public async Task<IActionResult> AddItem(CreateBasketItemsDTO item, long userId)
         {
             var dto = await service.AddItem(item, userId);
             if (dto != null)

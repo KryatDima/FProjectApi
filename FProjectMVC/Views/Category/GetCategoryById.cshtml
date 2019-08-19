@@ -1,0 +1,15 @@
+﻿@model FProjectMVC.Models.CategoryViewModel
+
+@{
+    ViewData["Title"] = "GetCategoryById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>GetCategoryById</h1>
+
+<div>
+    <div>Title: @Model.Title</div>
+    <p>@Html.ActionLink("Edit", "Update", "Category", new { id = Model.Id }, null)</p>
+    <p>@Html.ActionLink("Delete", "Delete", "Category", new { id = Model.Id }, null)</p>
+</div>
+

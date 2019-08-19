@@ -63,9 +63,9 @@ namespace FProjectBack.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BasketDTO bdto, string comment)
+        public async Task<IActionResult> Create(CreateOrderDTO createDto)
         {
-            var dto = await service.Create(bdto,comment);
+            var dto = await service.Create(createDto);
             if (dto != null)
             {
                 return Ok(dto);

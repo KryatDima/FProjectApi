@@ -1,0 +1,55 @@
+﻿@model FProjectMVC.Models.ProductListViewModel
+
+@{
+    ViewData["Title"] = "GetListByFilters";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="text-center">
+        <div>
+            <div>
+                <div>
+                    @using (Html.BeginForm("GetListByFilters", "Product", FormMethod.Post))
+                    {
+                        var selectedList = new SelectList(Model.brands
+                            .Select(x =>
+                            new SelectListItem
+                            {
+                                Text = x.Title,
+                                Value = (Convert.ToInt32(x.Id)).ToString()
+                            }), "Value", "Text");
+
+                        var selectedList2 = new SelectList(Model.categories
+                            .Select(x =>
+                            new SelectListItem
+                            {
+                                Text = x.Title,
+                                Value = (Convert.ToInt32(x.Id)).ToString()
+                            }), "Value", "Text");
+
+
+                        @*@Html.TextBoxFor(x => x.Rating, new { placeholder = "Rating",@class="form-control" })*@
+                        @Html.TextBoxFor(x => x.PriceFrom, new { placeholder = "PriceFrom", @class = "form-control" })
+                        @Html.TextBoxFor(x => x.PriceTo, new { placeholder = "PriceTo", @class = "form-control" })
+                        @Html.DropDownListFor(x => x.BrandId, selectedList, new { @class = "form-control" })
+                        @Html.DropDownListFor(x => x.CategoryId, selectedList2, new { @class = "form-control" })
+
+
+                        <button type="submit">Search</button>
+                        <button type="submit">@Html.ActionLink("Reset", "Index", "Home")</button>
+                    }
+                </div>
+                <div></div>
+
+                @foreach (var product in Model.Products)
+                {
+                    <form>
+                        <div><img src="~/x-icon-png-13.jpg" width="189" height="255" alt="lorem"/></div>
+                        <div>Title:@Html.ActionLink(product.Title, "GetProductById", "Product", new { id = product.Id }, null)</div>
+                        <div>Brand: @product.brand.Title</div>
+                        <div>Price: @product.Price</div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>

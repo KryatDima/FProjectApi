@@ -56,10 +56,15 @@ namespace FProject.Domain
             }
             else
             {
-                var item = BasketItemsConverter.Convert(dto);
+                
+                    var item = BasketItemsConverter.Convert(dto);
                 var productDto = await productService.Get(item.ProductId);
-                item = await unitOfWork.Repository<BasketItems>().Add(item);
-                basket.BasketItems.Add(BasketItemsConverter.Convert(dto, item.Id));
+                if (dto.Quantity <= productDto.Quantity)
+                {
+                    item = await unitOfWork.Repository<BasketItems>().Add(item);
+                    basket.BasketItems.Add(BasketItemsConverter.Convert(dto, item.Id));
+                }
+                
             }
             return basket;
         }

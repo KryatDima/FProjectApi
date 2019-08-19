@@ -1,0 +1,20 @@
+﻿@model FProjectMVC.Models.CategoryListViewModel
+
+@{
+    ViewData["Title"] = "GetAllCategories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>GetAllCategories</h1>
+
+<div>
+    @foreach (var category in Model.Categories)
+    {
+        <div>
+            <div>Title:@Html.ActionLink(category.Title, "GetCategoryById", "Category", new { id = category.Id }, null)</div>
+        </div>
+    }
+    <div>
+        <p>@Html.ActionLink("Add New Category", "Add", "Category")</p>
+    </div>
+</div>

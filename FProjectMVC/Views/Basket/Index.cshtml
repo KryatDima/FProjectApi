@@ -1,0 +1,37 @@
+﻿@model FProjectMVC.Models.BasketViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Get</h1>
+
+<div>
+    <div>Owner: @Model.User.FirstName @Model.User.LastName</div>
+    <div>Items: @foreach (var item in Model.items) {
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        Title
+                    </td>
+                    <td>
+                        Price
+                    </td>
+                    <td>
+                        Quantity
+                    </td>
+                </tr>
+                <tr>
+                    <td>@item.product.Title</td>
+                    <td>@item.product.Price</td>
+                    <td>@item.Quantity</td>
+                    <td><p>@Html.ActionLink("X", "Delete", "Basket", new BasketItemViewModel { Id=item.Id,BasketId=Model.Id,ProductId=item.ProductId,Quantity=item.Quantity }, null)</p></td>
+                </tr>
+            </table>
+        </div>
+    }</div>
+    <div><p>@Html.ActionLink("Continue buying", "Index", "Home")</p></div>
+    <div><p>@Html.ActionLink("Make an order", "Create", "Order")</p></div>
+</div>
