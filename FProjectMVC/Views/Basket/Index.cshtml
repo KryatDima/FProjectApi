@@ -10,7 +10,7 @@
 <div>
     <div>Owner: @Model.User.FirstName @Model.User.LastName</div>
     <div>Items: @foreach (var item in Model.items) {
-        <div>
+        <div style="text-align:center">
             <table>
                 <tr>
                     <td>
@@ -32,6 +32,10 @@
             </table>
         </div>
     }</div>
-    <div><p>@Html.ActionLink("Continue buying", "Index", "Home")</p></div>
-    <div><p>@Html.ActionLink("Make an order", "Create", "Order")</p></div>
+    <div>
+        <p>
+            <button type="submit">@Html.ActionLink("Continue buying", "Index", "Home")</button>
+            <button type="submit">@Html.ActionLink("Make an order", "Create", "Order")</button>
+        </p>
+    </div>
 </div>

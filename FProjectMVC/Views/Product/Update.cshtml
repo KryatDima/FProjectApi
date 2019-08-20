@@ -14,22 +14,7 @@
         @Html.TextBoxFor(x => x.Price, new { placeholder = "Price", @class = "form-control" , required="required"})
         @Html.TextBoxFor(x => x.Quantity, new { placeholder = "Quantity", @class = "form-control" , required="required"})
         @Html.TextBoxFor(x => x.Description, new { placeholder = "Description", @class = "form-control" , required="required"})
-        @*var selectedList = new SelectList(Model.brands
-        .Select(x =>
-        new SelectListItem
-        {
-            Text = x.Title,
-            Value = (Convert.ToInt32(x.Id)).ToString()
-        }), "Value", "Text");
 
-        var selectedList2 = new SelectList(Model.categories
-                .Select(x =>
-                new SelectListItem
-                {
-                    Text = x.Title,
-                    Value = (Convert.ToInt32(x.Id)).ToString()
-                }), "Value", "Text");
-            *@
         @Html.DropDownListFor(x => x.BrandId, Model.brands, new { @class = "form-control" , required="required"})
         @Html.DropDownListFor(x => x.CategoryId, Model.categories, new { @class = "form-control" , required="required"})
 

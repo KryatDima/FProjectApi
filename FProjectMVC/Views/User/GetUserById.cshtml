@@ -13,6 +13,8 @@
     <div><h6>E-mail:</h6> @Model.Email</div>
     <div><h6>Delivery address:</h6> @Model.DeliveryAddress</div>
     <div><h6>Phone:</h6> @Model.PhoneNumber</div>
-    <p>@Html.ActionLink("Edit", "Update", "User", new { id = Model.Id }, null)</p>
-    <p>@Html.ActionLink("Delete", "Delete", "User", new { id = Model.Id }, null)</p>
+    <p>
+        <button type="submit">@Html.ActionLink("Edit", "Update", "User", new { id = Model.Id }, null)</button>
+        <button type="submit">@Html.ActionLink("Delete", "Delete", "User", new { id = Model.Id }, null)</button>
+    </p>
 </div>

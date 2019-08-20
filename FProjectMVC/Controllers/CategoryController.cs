@@ -28,7 +28,7 @@ namespace FProjectMVC.Controllers
             {
                 category = result.Content.ReadAsAsync<CategoryViewModel>().Result;
             }
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("GetAllCategories");
         }
 
         public IActionResult GetAllCategories()

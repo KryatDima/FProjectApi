@@ -5,16 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Brands: </h1>
+<h4>Brands: </h4>
 
 <div>
     @foreach (var brand in Model.Brands)
     {
         <div>
-            <div><h4>Title:@Html.ActionLink(brand.Title, "GetBrandById", "Brand", new { id = brand.Id }, null)</h4></div>
+            <div><h6>Title:@Html.ActionLink(brand.Title, "GetBrandById", "Brand", new { id = brand.Id }, null)</h6></div>
         </div>
     }
-    <div>
-        <p>@Html.ActionLink("Add New Brand", "Add", "Brand")</p>
-    </div>
+<div>
+    <button type="submit">@Html.ActionLink("Add New Brand", "Add", "Brand")</button>
+</div>
 </div>
