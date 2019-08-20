@@ -38,11 +38,11 @@ namespace FProjectMVC.Controllers
             return RedirectToAction("Add",new { productId=item.ProductId });
         }
 
-        public IActionResult Index()
+        public IActionResult Index(long userid=1)
         {
             BasketViewModel basket = new BasketViewModel();
             HttpClient client = new HttpClient();
-            var result = client.GetAsync("https://localhost:44309/api/basket/1").Result;
+            var result = client.GetAsync("https://localhost:44309/api/basket/"+userid).Result;
             if (result.IsSuccessStatusCode)
             {
                 basket = result.Content.ReadAsAsync<BasketViewModel>().Result;

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="text-center">
+<div class="text-center">
         <div>
             <div>
                 <div>
@@ -40,16 +40,19 @@
                     }
                 </div>
                 <div></div>
-
-                @foreach (var product in Model.Products)
-                {
-                    <form>
-                        <div><img src="~/x-icon-png-13.jpg" width="189" height="255" alt="lorem"/></div>
-                        <div>Title:@Html.ActionLink(product.Title, "GetProductById", "Product", new { id = product.Id }, null)</div>
-                        <div>Brand: @product.brand.Title</div>
-                        <div>Price: @product.Price</div>
-                    </form>
-                }
+                <div class="x">
+                    @foreach (var product in Model.Products)
+                    {
+                        
+                            <form class="col-md-3 product-block">
+                                <div><a href='@Url.Action("GetProductById", "Product",new { id=product.Id })'><img src="~/x-icon-png-13.jpg" width="150" height="150" alt="lorem" /></a></div>
+                                <div>Title:@Html.ActionLink(product.Title, "GetProductById", "Product", new { id = product.Id }, null)</div>
+                                <div>Brand: @product.brand.Title</div>
+                                <div>Price: @product.Price</div>
+                            </form>
+                        
+                    }
+                </div>
             </div>
-        </div>
     </div>
+</div>

@@ -56,8 +56,8 @@ namespace FProjectMVC.Controllers
                 TotalPrice= basket.items.Select(p => p.product.Price).Sum(),
                 
             };
-            
-            
+
+            if (order.OrderItems == null) return RedirectToAction("Index", "Basket", new { userId = order.User.Id });
 
             return View(order);
         }

@@ -95,13 +95,13 @@ namespace FProject.Domain
                     user.Email = userParam.Email;
             }
 
-            //if (!string.IsNullOrWhiteSpace(password))
-            //{
-            //    PasswordHash ph = await hasher.CreatePasswordHash(password);
+            if (!string.IsNullOrWhiteSpace(userP.Password))
+            {
+                PasswordHash ph = await hasher.CreatePasswordHash(userP.Password);
 
-            //    userParam.PasswordHash = ph.Hash;
-            //    userParam.PasswordSalt = ph.Salt;
-            //}
+                user.PasswordHash = ph.Hash;
+                user.PasswordSalt = ph.Salt;
+            }
 
             if (string.IsNullOrWhiteSpace(userParam.PhoneNumber))
                 throw new Exception("can't be empty or null");

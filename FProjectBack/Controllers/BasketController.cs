@@ -48,7 +48,7 @@ namespace FProjectBack.Controllers
             }
         }
 
-        [HttpDelete("{userId}")]
+        [HttpPut("{userId}")]
         public async Task<IActionResult> DeleteItem(BasketItemsDTO entity, long userId)
         {
             var dto = await service.Delete(entity, userId);

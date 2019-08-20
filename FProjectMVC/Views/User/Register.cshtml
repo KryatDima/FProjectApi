@@ -1,0 +1,24 @@
+﻿@model FProjectMVC.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Registration</h1>
+
+<div>
+    @using (Html.BeginForm("Registration", "User", FormMethod.Post))
+
+    {
+        <div>First Name: @Html.TextBoxFor(x => x.FirstName, new { placeholder = "FirstName", @class = "form-control", required = "required" })</div>
+        <div>Last Name: @Html.TextBoxFor(x => x.LastName, new { placeholder = "LastName", @class = "form-control", required = "required" })</div>
+        <div>Password: @Html.PasswordFor(x => x.Password, new { placeholder = "Title", @class = "form-control", required = "required" })</div>
+        <div>Phonenumber: @Html.TextBoxFor(x => x.PhoneNumber, new { placeholder = "Title", @class = "form-control", required = "required" })</div>
+        <div>Date of birth: @Html.EditorFor(x => x.DateOfBirth, new { placeholder = "Title", @class = "form-control", required = "required" })</div>
+        <div>E-mail: @Html.TextBoxFor(x => x.Email, new { placeholder = "Title", @class = "form-control", required = "required" })</div>
+        <div>Delivery address: @Html.TextBoxFor(x => x.DeliveryAddress, new { placeholder = "Title", @class = "form-control", required = "required" })</div>
+        
+        <button type="submit">Save</button>
+    }
+</div>

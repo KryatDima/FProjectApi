@@ -5,10 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>GetBrandById</h1>
 
 <div>
-    <div>Title: @Model.Title</div>
+    <div><h4>Title: @Model.Title</h4></div>
     <div>Description: @Model.Description</div>
     <p>@Html.ActionLink("Edit", "Update", "Brand", new { id = Model.Id }, null)</p>
     <p>@Html.ActionLink("Delete", "Delete", "Brand", new { id = Model.Id }, null)</p>

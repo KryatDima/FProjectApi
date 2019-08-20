@@ -54,3 +54,36 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+.product {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.product-block {
+    margin: 2px;
+    size: 150px;
+    width: 150px;
+    border-radius: 5px 5px 5px 5px;
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    word-wrap: break-word;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.x {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    justify-content: space-around;
+}
+
+.navigation {
+    background-color: antiquewhite;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -1,0 +1,18 @@
+﻿@model FProjectMVC.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "Get";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>User info</h1>
+
+<div>
+    <div><h6>Full name:</h6> @Model.FirstName @Model.LastName</div>
+    <div><h6>Date of birth:</h6> @Model.DateOfBirth</div>
+    <div><h6>E-mail:</h6> @Model.Email</div>
+    <div><h6>Delivery address:</h6> @Model.DeliveryAddress</div>
+    <div><h6>Phone:</h6> @Model.PhoneNumber</div>
+    <p>@Html.ActionLink("Edit", "Update", "User", new { id = Model.Id }, null)</p>
+    <p>@Html.ActionLink("Delete", "Delete", "User", new { id = Model.Id }, null)</p>
+</div>
